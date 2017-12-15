@@ -119,10 +119,10 @@ def val_batch(net, opt, dataset, converter, criterion, max_iter=100, full_val=Fa
 
         preds = net(image)
         preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
-        cost = criterion(preds, text, preds_size, length) / batch_size  # Todo how is the cost calculated?
+        cost = criterion(preds, text, preds_size, length) / batch_size
         loss_avg.add(cost)
 
-        _, preds = preds.max(2)  # todo where is the output size set to 26? Empirically it is.
+        _, preds = preds.max(2)  # Output set to 26 Empirically. Changing width changes output length
         # preds = preds.squeeze(2)
         preds = preds.transpose(1, 0).contiguous().view(-1)
         sim_preds = converter.decode(preds.data, preds_size.data, raw=False)
@@ -162,14 +162,14 @@ def train_batch(net, criterion, optimizer, train_iter, opt, converter):
     cpu_images, cpu_texts = data
     batch_size = cpu_images.size(0)
     utils.loadData(image, cpu_images)
-    t, l = converter.encode(cpu_texts) #Todo is this conversion correct?
+    t, l = converter.encode(cpu_texts)
 
     utils.loadData(text, t)
     utils.loadData(length, l)
 
-    preds = net(image) #todo average time of run?
+    preds = net(image)
     preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
-    cost = criterion(preds, text, preds_size, length) / batch_size #TODO what is this criterion
+    cost = criterion(preds, text, preds_size, length) / batch_size
     net.zero_grad()
     cost.backward()
     optimizer.step()

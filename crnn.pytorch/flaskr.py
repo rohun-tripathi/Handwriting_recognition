@@ -1,15 +1,13 @@
-import os
-import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-    render_template, flash, jsonify
+import base64
+from io import BytesIO
+
+from PIL import Image
+from flask import Flask, request, redirect, url_for, render_template, jsonify
 
 import run_for_given_file
 
-from PIL import Image
-from io import BytesIO
-import base64
-
-app = Flask(__name__)  # create the application instance :)
+app = Flask(__name__)
+test_image_name = 'encoded_random_keyword.png'
 
 
 @app.route('/')
@@ -47,10 +45,11 @@ def single_image():
     if 'image' not in request.form:
         raise Exception("Send me the image for this word!")
 
+    # Temporary image saving hack
     k = Image.open(BytesIO(base64.b64decode(request.form['image'].split(",")[1])))
-    k.save("abcd.png")
+    k.save(test_image_name)
     k.close()
 
-    return run_for_given_file.extract_for_image('abcd.png')
+    return run_for_given_file.extract_for_image(test_image_name)
 
 app.run()

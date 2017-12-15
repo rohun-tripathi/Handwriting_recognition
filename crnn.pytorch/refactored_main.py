@@ -19,14 +19,8 @@ from models import crnn as crnn_model
 
 import json
 
-# TODO - Note from the repo. Construct dataset following origin guide.
-# For training with variable length, please sort the image according to the text length.
-# first point - How do we do it now?
-# easy change to other thing?
-
 
 def load_trained_crnn_for_eval(opt):
-    # opt.crnn = '/Users/rohuntripathi/Course_Product_Studio/WeillHWR/crnn.pytorch/trained_models/netCRNN_43_500_0.667363636364.pth'
     opt.crnn = 'trained_models/netCRNN_43_500_0.667363636364.pth'
     opt.batchSize = 20
 
@@ -62,29 +56,6 @@ def load_trained_crnn_for_eval(opt):
     crnn.eval()
 
     return crnn, utils.strLabelConverter(opt.alphabet), CTCLoss()
-
-
-def extract_result(opt, crnn, converter, extra_path):
-    print(extra_path)
-
-    test_dataset = dataset.hwrDataset(mode="test", transform=dataset.resizeNormalize((100, 32)),
-                                      return_index=True, extra_path=extra_path)
-
-    accuracy, predicted_list = run_net_batch(crnn, opt, test_dataset, converter)
-
-    sorted(predicted_list, key=lambda instance: instance.index)
-
-    return predicted_list
-
-
-def validate(opt, crnn, converter, criterion):
-    test_dataset = dataset.hwrDataset(mode="test", transform=dataset.resizeNormalize((100, 32)))
-
-    val_loss_avg, accuracy, corrected_accuracy = val_batch(crnn, opt, test_dataset, converter, criterion, full_val=True)
-
-    print(corrected_accuracy)
-    print(accuracy)
-    print(val_loss_avg)
 
 
 def main(opt, case):
@@ -251,6 +222,29 @@ def get_parameters():
     opt.adadelta = True
 
     return opt
+
+
+def extract_result(opt, crnn, converter, extra_path):
+    print(extra_path)
+
+    test_dataset = dataset.hwrDataset(mode="test", transform=dataset.resizeNormalize((100, 32)),
+                                      return_index=True, extra_path=extra_path)
+
+    accuracy, predicted_list = run_net_batch(crnn, opt, test_dataset, converter)
+
+    sorted(predicted_list, key=lambda instance: instance.index)
+
+    return predicted_list
+
+
+def validate(opt, crnn, converter, criterion):
+    test_dataset = dataset.hwrDataset(mode="test", transform=dataset.resizeNormalize((100, 32)))
+
+    val_loss_avg, accuracy, corrected_accuracy = val_batch(crnn, opt, test_dataset, converter, criterion, full_val=True)
+
+    print(corrected_accuracy)
+    print(accuracy)
+    print(val_loss_avg)
 
 
 # Note - Both Adam and RMS Prop have not performed well

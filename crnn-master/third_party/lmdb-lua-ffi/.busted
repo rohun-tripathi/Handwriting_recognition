@@ -1,6 +1,0 @@
-return {
-    default = {
-        ROOT = 'tests',
-        pattern = 'test_'
-    }
-}
