@@ -1,19 +1,35 @@
 ### Handwritten OCR
 
-A handwriting recognition code project that just works.
-It takes as input English handwritten word and gives you the prediction of the word.
+A handwriting recognition project that `just works`.
+It takes as input an English handwritten word and gives you the prediction of the word.
 It processes data at the character level and can be used for character level predictions, if required.
+
+The model here has two levels of outputs. The first level provides output combined at the character level. The second level runs the output through a large dictionary and chooses the words within one or edit distances that have a higher probability of occuring. Using the corpus, a user can bias the output to extract keywords from the domain they want to focus on.
 
 The Handwriting model uses a pre-trained model available on the CRNN repository for text recognition in the wild - https://github.com/bgshih/crnn.
 This model is performs well for both, handwriting recognition and text recognition in the wild.
 
 #### Examples that work:
+![alt text](https://github.com/rohun-tripathi/Handwriting_recognition/blob/master/crnn.pytorch/data/top.png?raw=true)
+-> 'stop'
+
+![alt text](https://github.com/rohun-tripathi/Handwriting_recognition/blob/master/crnn.pytorch/data/meeting.png?raw=true)
+-> 'merhing' (output at character level)
+
+-> 'meeting' (output after post processing using the corpus)
+
+
+
+![alt text](https://github.com/rohun-tripathi/Handwriting_recognition/blob/master/crnn.pytorch/practice_demo/Screen%20Shot%202017-12-11%20at%202.24.58%20AM.png?raw=true)
+-> 'sanding' (output at character level)
+
+-> 'standing' (output after post processing using the corpus)
 
 
 #### Ways to test:
 
 (1) Run : python crnn.pytorch/demo.py
-(2) Start the flask app and upload an image - 
+(2) Start the flask app and upload an image via the interface on localhost:5000, or using -
     
         python crnn.pytorch/flaskr.py
         curl --data "index=1" http://localhost:5000/image_txt
@@ -40,8 +56,6 @@ Possible directions is making it support more languages or making it a more robu
 For training with variable length images, please sort the image according to the text length. This is not breaking, and model trains well without it. But it can help increase a few percentages
 
 ##### The MIT License
-
-Copyright (c) 2010-2017 Google, Inc. http://angularjs.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
