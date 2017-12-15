@@ -19,16 +19,15 @@ This model is performs well for both, handwriting recognition and text recogniti
 -> 'meeting' (output after post processing using the corpus)
 
 
-
 ![alt text](https://github.com/rohun-tripathi/Handwriting_recognition/blob/master/crnn.pytorch/practice_demo/Screen%20Shot%202017-12-11%20at%202.24.58%20AM.png?raw=true)
 -> 'sanding' (output at character level)
 
 -> 'standing' (output after post processing using the corpus)
 
-
 #### Ways to test:
 
-(1) Run : python crnn.pytorch/demo.py
+(1) Run : `python crnn.pytorch/demo.py`
+
 (2) Start the flask app and upload an image via the interface on localhost:5000, or using -
     
         python crnn.pytorch/flaskr.py
@@ -47,13 +46,21 @@ Clone this repo. Install PyTorch. The code converts the GPU trained models to CP
 #### Data Sets
 
 This repo relies on the IAM Offline English word dataset - http://www.fki.inf.unibe.ch/databases/iam-handwriting-database/download-the-iam-handwriting-database
-Please down the word level images and extract them inside ./crnn.pytorch/data and the directory name should be "words"
+Please download the word level images and extract them inside `./crnn.pytorch/data` and the directory name should be `words`.
 
 #### Contribution
 Possible directions is making it support more languages or making it a more robust English model.
 
 #### Performance
+It achieves 66.73% exact word match accuracy on the IAM test data set if using the character level layer output.
+The test set was created by holding out 25% of the complete data set.
+
+It achieves 73.90% exact word match accuracy on the same IAM test data set if using output after the post processing layer.
+
 For training with variable length images, please sort the image according to the text length. This is not breaking, and model trains well without it. But it can help increase a few percentages
+
+#### Usability
+This project contains a bootstrap based UI that can be used to demonstrate the validity of the project and for quick start.
 
 ##### The MIT License
 
