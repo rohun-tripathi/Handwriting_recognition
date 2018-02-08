@@ -6,10 +6,11 @@ It processes data at the character level and can be used for character level pre
 
 The model here has two levels of outputs. The first level provides output combined at the character level. The second level runs the output through a large dictionary and chooses the words within one or edit distances that have a higher probability of occuring. Using the corpus, a user can bias the output to extract keywords from the domain they want to focus on.
 
-The Handwriting model uses a pre-trained model available on the CRNN repository for text recognition in the wild - https://github.com/bgshih/crnn.
-This model is performs well for both, handwriting recognition and text recognition in the wild.
+The Handwriting model uses a pre-trained model available on the CRNN repository for text recognition in the wild - https://github.com/bgshih/crnn to initialize its weights.
 
-#### Examples that work:
+The final trained model is performs well for both, handwriting recognition and text recognition in the wild.
+
+#### Examples:
 ![alt text](https://github.com/rohun-tripathi/Handwriting_recognition/blob/master/crnn.pytorch/data/top.png?raw=true)
 -> 'stop'
 
